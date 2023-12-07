@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой переводчик</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #translator {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="translator">
+        <h2>Простой переводчик</h2>
+        <textarea id="inputText" placeholder="Введите текст для перевода"></textarea>
+        <button onclick="translate()">Перевести</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function translate() {
+            const inputText = document.getElementById('inputText').value;
+            const resultDiv = document.getElementById('result');
+
+            // Здесь вы можете использовать API для перевода, например, Google Translate API или Yandex.Translate API
+            // Пожалуйста, замените 'YOUR_API_KEY' на ваш ключ API.
+
+            // Пример с Google Translate API (требуется API-ключ):
+            const apiKey = 'YOUR_API_KEY';
+            const targetLanguage = 'ru';
+
+            const apiUrl = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: inputText,
+                    target: targetLanguage,
+                }),
+            });
+
+            const data = await response.json();
+
+            // Вывести результат на страницу
+            if (data.data && data.data.translations && data.data.translations.length > 0) {
+                const translatedText = data.data.translations[0].translatedText;
+                resultDiv.innerHTML = `<p><strong>Переведенный текст:</strong> ${translatedText}</p>`;
+            } else {
+                resultDiv.innerHTML = '<p>Ошибка при переводе текста.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
