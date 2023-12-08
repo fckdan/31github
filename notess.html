@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Homework Notes</h1>
+
+<textarea id="noteInput" placeholder="Type your homework notes here..."></textarea>
+<button onclick="saveNote()">Save Note</button>
+<button onclick="clearNotes()">Clear Notes</button>
+
+<h2>Notes:</h2>
+<ul id="noteList"></ul>
+
+<script>
+    // Function to save a note
+    function saveNote() {
+        var noteInput = document.getElementById('noteInput');
+        var noteList = document.getElementById('noteList');
+        
+        // Get existing notes from localStorage or initialize an empty array
+        var notes = JSON.parse(localStorage.getItem('homeworkNotes')) || [];
+        
+        // Add the new note to the array
+        notes.push(noteInput.value);
+        
+        // Save the updated array back to localStorage
+        localStorage.setItem('homeworkNotes', JSON.stringify(notes));
+        
+        // Clear the input field
+        noteInput.value = '';
+        
+        // Refresh the displayed notes
+        displayNotes();
+    }
+
+    // Function to display notes
+    function displayNotes() {
+        var noteList = document.getElementById('noteList');
+        
+        // Clear existing notes
+        noteList.innerHTML = '';
+        
+        // Get notes from localStorage
+        var notes = JSON.parse(localStorage.getItem('homeworkNotes')) || [];
+        
+        // Display each note in the list
+        notes.forEach(function(note) {
+            var li = document.createElement('li');
+            li.textContent = note;
+            noteList.appendChild(li);
+        });
+    }
+
+    // Function to clear all notes
+    function clearNotes() {
+        localStorage.removeItem('homeworkNotes');
+        displayNotes();
+    }
+
+    // Initial display of notes when the page loads
+    displayNotes();
+</script>
+
+</body>
+</html>
