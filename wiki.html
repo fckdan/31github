@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Википедия поиск</title>
+</head>
+<body>
+
+  <h1>Поиск на Википедии</h1>
+  <input type="text" id="searchInput" placeholder="Введите запрос">
+  <button onclick="searchWikipedia()">Поиск</button>
+
+  <div id="results"></div>
+
+  <script>
+    function searchWikipedia() {
+      const searchInput = document.getElementById('searchInput').value;
+
+      if (searchInput.trim() === '') {
+        alert('Введите запрос!');
+        return;
+      }
+
+      const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=${encodeURIComponent(searchInput)}`;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => displayResults(data.query.search))
+        .catch(error => console.error('Ошибка при выполнении запроса:', error));
+    }
+
+    function displayResults(results) {
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '';
+
+      if (results.length === 0) {
+        resultsContainer.innerHTML = '<p>Ничего не найдено.</p>';
+        return;
+      }
+
+      results.forEach(result => {
+        const resultItem = document.createElement('div');
+        resultItem.innerHTML = `<h3>${result.title}</h3><p>${result.snippet}</p>`;
+        resultsContainer.appendChild(resultItem);
+      });
+    }
+  </script>
+</body>
+</html>
