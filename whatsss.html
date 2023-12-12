@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Message Example</title>
+</head>
+<body>
+
+  <h1>Send a WhatsApp Message</h1>
+
+  <label for="phoneNumber">Phone Number:</label>
+  <input type="text" id="phoneNumber" placeholder="Enter phone number">
+
+  <label for="message">Message:</label>
+  <textarea id="message" placeholder="Enter your message"></textarea>
+
+  <button onclick="sendMessage()">Send Message</button>
+
+  <script>
+    function sendMessage() {
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const message = document.getElementById('message').value;
+
+      // Validate input
+      if (!phoneNumber || !message) {
+        alert('Please enter both phone number and message.');
+        return;
+      }
+
+      // Format the message link
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      // Open the WhatsApp link in a new tab
+      window.open(whatsappLink, '_blank');
+    }
+  </script>
+
+</body>
+</html>
