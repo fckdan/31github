@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Автоответчик</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #autoReplyMessage {
+      display: none;
+      color: green;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Автоответчик</h1>
+
+  <button onclick="toggleAutoReply()">Включить автоответ</button>
+
+  <div id="autoReplyMessage">
+    <p>Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.</p>
+  </div>
+
+  <script>
+    function toggleAutoReply() {
+      const autoReplyMessage = document.getElementById('autoReplyMessage');
+      autoReplyMessage.style.display = 'block';
+
+      setTimeout(() => {
+        autoReplyMessage.style.display = 'none';
+      }, 5000); // Скрывать сообщение через 5 секунд (можете изменить это значение)
+    }
+  </script>
+
+</body>
+</html>
