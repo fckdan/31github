@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Английский словарь</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #dictionary {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Английский словарь</h1>
+
+  <div id="dictionary">
+    <table>
+      <thead>
+        <tr>
+          <th>Слово</th>
+          <th>Значение</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Apple</td>
+          <td>Яблоко</td>
+        </tr>
+        <!-- Добавьте другие строки, соответствующие вашему словарю -->
+      </tbody>
+    </table>
+  </div>
+
+  <label for="newWord">Новое слово:</label>
+  <input type="text" id="newWord" placeholder="Введите новое слово">
+
+  <label for="newDefinition">Значение:</label>
+  <input type="text" id="newDefinition" placeholder="Введите значение">
+
+  <button onclick="addWord()">Добавить слово</button>
+
+  <script>
+    function addWord() {
+      const newWordInput = document.getElementById('newWord');
+      const newDefinitionInput = document.getElementById('newDefinition');
+
+      const word = newWordInput.value;
+      const definition = newDefinitionInput.value;
+
+      if (!word || !definition) {
+        alert('Введите слово и его значение.');
+        return;
+      }
+
+      const dictionaryTable = document.querySelector('table tbody');
+      const newRow = dictionaryTable.insertRow();
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      cell1.innerHTML = word;
+      cell2.innerHTML = definition;
+
+      // Очистка полей ввода
+      newWordInput.value = '';
+      newDefinitionInput.value = '';
+    }
+  </script>
+
+</body>
+</html>
