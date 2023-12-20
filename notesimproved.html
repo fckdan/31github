@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Удобные заметки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #notes {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    #notesList {
+      list-style: none;
+      padding: 0;
+    }
+
+    .note {
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Удобные заметки</h1>
+
+  <div id="notes">
+    <ul id="notesList"></ul>
+  </div>
+
+  <label for="newNote">Новая заметка:</label>
+  <input type="text" id="newNote" placeholder="Введите новую заметку">
+
+  <button onclick="addNote()">Добавить заметку</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', loadNotes);
+
+    function addNote() {
+      const newNoteInput = document.getElementById('newNote');
+      const notesList = document.getElementById('notesList');
+
+      const noteText = newNoteInput.value;
+
+      if (!noteText) {
+        alert('Введите текст заметки.');
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.className = 'note';
+      li.innerHTML = `
+        <span>${noteText}</span>
+        <button onclick="removeNote(this)">Удалить</button>
+      `;
+
+      notesList.appendChild(li);
+
+      // Сохранение заметок в локальном хранилище
+      saveNotes();
+
+      // Очистка поля ввода
+      newNoteInput.value = '';
+    }
+
+    function removeNote(button) {
+      const noteElement = button.parentNode;
+      noteElement.remove();
+
+      // Сохранение заметок после удаления
+      saveNotes();
+    }
+
+    function saveNotes() {
+      const notesList = document.getElementById('notesList');
+      const notes = [];
+
+      // Проходимся по каждой заметке и сохраняем текст в массив
+      for (let i = 0; i < notesList.children.length; i++) {
+        const noteText = notesList.children[i].querySelector('span').innerText;
+        notes.push(noteText);
+      }
+
+      // Сохраняем массив с заметками в локальном хранилище
+      localStorage.setItem('notes', JSON.stringify(notes));
+    }
+
+    function loadNotes() {
+      const notesList = document.getElementById('notesList');
+      const storedNotes = localStorage.getItem('notes');
+
+      if (storedNotes) {
+        const notes = JSON.parse(storedNotes);
+
+        // Создаем элементы для каждой сохраненной заметки
+        notes.forEach(noteText => {
+          const li = document.createElement('li');
+          li.className = 'note';
+          li.innerHTML = `
+            <span>${noteText}</span>
+            <button onclick="removeNote(this)">Удалить</button>
+          `;
+          notesList.appendChild(li);
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
