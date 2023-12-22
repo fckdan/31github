@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Расчет расходов</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #expenses {
+      width: 60%;
+      margin: 20px auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    #totalExpenses {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Расчет расходов</h1>
+
+  <div id="expenses">
+    <label for="expenseName">Наименование расхода:</label>
+    <input type="text" id="expenseName" placeholder="Продукты, транспорт, аренда жилья, и т.д.">
+
+    <label for="expenseAmount">Сумма расхода:</label>
+    <input type="number" id="expenseAmount" placeholder="Введите сумму">
+
+    <button onclick="addExpense()">Добавить расход</button>
+
+    <div id="totalExpenses">Общие расходы: $0.00</div>
+  </div>
+
+  <script>
+    let totalExpenses = 0;
+
+    function addExpense() {
+      const expenseNameInput = document.getElementById('expenseName');
+      const expenseAmountInput = document.getElementById('expenseAmount');
+      const totalExpensesElement = document.getElementById('totalExpenses');
+
+      const expenseName = expenseNameInput.value;
+      const expenseAmount = parseFloat(expenseAmountInput.value);
+
+      if (!expenseName || isNaN(expenseAmount) || expenseAmount <= 0) {
+        alert('Введите корректные данные для расхода.');
+        return;
+      }
+
+      // Обновление общей суммы расходов
+      totalExpenses += expenseAmount;
+
+      // Отображение общей суммы расходов
+      totalExpensesElement.textContent = `Общие расходы: $${totalExpenses.toFixed(2)}`;
+
+      // Очистка полей ввода
+      expenseNameInput.value = '';
+      expenseAmountInput.value = '';
+    }
+  </script>
+
+</body>
+</html>
