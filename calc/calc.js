@@ -31,23 +31,48 @@ document.querySelector('buttons').onclick = (event) => {
     if (digit.includes(key)) {
         if (b ==='' && sign ===''){
             a += key;
-            console.log(a, b, sign);
+            console.table(a, b, sign);
             out.textContent = a;
         }
         else if (a!=='' && b!=='' && finish){
+            b = key;
+            finish = false;
+            out.textContent = b;
+        
 
         }
         else{
             b += key;
-            out.textContent = a;
+            out.textContent = b;
         }
-        console.log(a, b, sign);
+        console.table(a, b, sign);
     }
 
     if (action.includes(key)){
         sign=key;
         out.textContent = sign;
-        console.log(a, b, sign);
+        console.table(a, b, sign);
         return;
+    }
+
+    if (key ==='='){
+        if (b ==='') b = a;
+        switch(sign){
+            case "+":
+                a = (+a) + (+b);
+                break;
+            case "-":
+                a = a - b;
+                break;
+            case "X":
+                a = a * b;
+                break;
+            case "/":
+                a = a / b;
+                break;
+        }
+        finish = true;
+        out.textContent = a;
+        console.table(a, b, sign);
     }
 }
