@@ -68,6 +68,13 @@ document.querySelector('buttons').onclick = (event) => {
                 a = a * b;
                 break;
             case "/":
+                if (b === '0'){
+                    out.textContent = "Wrong";
+                    a = '';
+                    b = '';
+                    sign = '';
+                    return;
+                }
                 a = a / b;
                 break;
         }
